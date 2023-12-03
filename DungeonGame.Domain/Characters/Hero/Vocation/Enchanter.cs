@@ -14,19 +14,38 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
         public int Mana { get; set; } = 100 + Level;
         public int Lives { get; set; } = 2;
         public bool toAttack { get; set; } = true;
+        public bool outOfMana { get; set; } = false;
 
-        public void Turn(bool toAttack)
+        public int Turn(Character charToAttack, bool winFlag)
         {
-            if (Battle.roundCount == 0)
+            if (HP <= 0) 
             {
-                Mana = 100 * Level;
+                Lives--;
+                return 3;   //resurected
             }
+            if (Lives <= 0) 
+                return 4;   //died
+            if (Battle.roundCount == 0) 
+                Mana = 100 + Level;
+            if (outOfMana && winFlag)
+            {
+                Mana = 100 + Level;
+                return 1;
+            }
+            if (!toAttack) 
+            {
+                Mana /= 2;
+                HP = 90;
+                return 2;
+            }
+            Attack(charToAttack);
+            return 0;
+
         }
         public override void Attack(Character charToAttack)
         {
-            
+            charToAttack.HP -= Damage;
+            Mana -= Damage / 2;
         }
-
-
     }
 }
