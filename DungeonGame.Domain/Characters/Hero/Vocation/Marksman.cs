@@ -10,7 +10,29 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
     {
         public override int HP { get; set; } = 100;
         public override int Damage { get; set; } = 20;
-        public float CricitcalChance { get; set; } = 5f;
-        public float StunChance { get; set; } = 5f;
+        public int CricitcalChance { get; set; } = 5;
+        const int CritMultiplier = 5;
+        public int StunChance { get; set; } = 5;
+
+        public override void Attack(Character charToAttack)
+        {
+            var rand = new Random();
+            int rollDice = rand.Next(99);
+            if (rollDice <= StunChance) Stun(charToAttack);
+            rollDice = rand.Next(99);
+            if (rollDice <= CricitcalChance) CriticalAttack(charToAttack);
+        }
+
+        public void CriticalAttack(Character charToAttack)
+        {
+            Damage *= CritMultiplier;
+            charToAttack.HP -= Damage;
+            Damage /= CritMultiplier;
+        }
+
+        public void Stun(Character charToAttack)
+        {
+            charToAttack.IsStunned = true;
+        }
     }
 }

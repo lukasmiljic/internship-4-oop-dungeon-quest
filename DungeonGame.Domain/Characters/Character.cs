@@ -12,9 +12,10 @@ namespace DungeonGame.Domain.Characters
         public string Name { get; set; }
         abstract public int HP { get; set; }
         abstract public int Damage { get; set; }
-        public void Attack(Character charToAttack)
-        {
-            charToAttack.HP -= this.Damage;
-        }
+        abstract public void Attack(Character charToAttack);
+        public bool IsStunned { get; set; }  = false;
+        public int Level { get; set; } = 1;
+
+        
     }
 }
