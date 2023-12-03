@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DungeonGame.Domain.Game;
+using DungeonGame.Domain.Constants;
 
 namespace DungeonGame.Domain.Characters.Hero.Vocation
 {
@@ -21,25 +22,26 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
             if (HP <= 0 && Lives > 1) 
             {
                 Lives--;
-                return 3;   //resurected
+                return GameConstants.Resurrected;   //resurected
             }
             if (HP <= 0 && Lives <= 0) 
-                return 0;   //died
+                return GameConstants.Death;
             if (Battle.roundCount == 0) 
                 Mana = 100 + Level;
-            if (outOfMana && winFlag)
+            if (!winFlag) return GameConstants.LostRound;
+            if (outOfMana)
             {
                 Mana = 100 + Level;
-                return 1;
+                return GameConstants.ManaRefilled;
             }
             if (!toAttack) 
             {
                 Mana /= 2;
                 HP = 90;
-                return 2;
+                return GameConstants.Heal;
             }
             Attack(charToAttack);
-            return 0;
+            return GameConstants.AttackSuccess;
 
         }
         public override void Attack(Character charToAttack)

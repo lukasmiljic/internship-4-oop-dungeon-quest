@@ -15,6 +15,6 @@ namespace DungeonGame.Domain.Characters
         abstract public void Attack(Character charToAttack);
         public int IsStunned { get; set; }  = 0;
         public int Lives { get; set; } = 1;
-        abstract public int Turn(Character charToAttack);
+        abstract public int Turn(Character charToAttack, bool winFlag);
     }
 }
