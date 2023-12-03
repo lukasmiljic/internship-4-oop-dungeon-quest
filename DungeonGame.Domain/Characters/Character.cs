@@ -13,7 +13,8 @@ namespace DungeonGame.Domain.Characters
         abstract public int HP { get; set; }
         abstract public int Damage { get; set; }
         abstract public void Attack(Character charToAttack);
-        public bool IsStunned { get; set; }  = false;
-        public int Lives { get; set; } = 1; 
+        public int IsStunned { get; set; }  = 0;
+        public int Lives { get; set; } = 1;
+        abstract public int Turn(Character charToAttack);
     }
 }

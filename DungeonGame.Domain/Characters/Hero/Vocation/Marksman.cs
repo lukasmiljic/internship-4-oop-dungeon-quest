@@ -13,7 +13,18 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
         public int CricitcalChance { get; set; } = 5;
         const int CritMultiplier = 5;
         public int StunChance { get; set; } = 5;
-
+        public bool CritAttack { get; set; } = false;
+        public override int Turn(Character charToAttack)
+        {
+            CritAttack = false;
+            if (HP <= 0)
+            {
+                Lives--;
+                return 0;
+            }
+            Attack(charToAttack);
+            return 1;
+        }
         public override void Attack(Character charToAttack)
         {
             var rand = new Random();
@@ -21,6 +32,7 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
             if (rollDice <= StunChance) Stun(charToAttack);
             rollDice = rand.Next(99);
             if (rollDice <= CricitcalChance) CriticalAttack(charToAttack);
+            else charToAttack.HP -= Damage;
         }
 
         public void CriticalAttack(Character charToAttack)
@@ -32,7 +44,8 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
 
         public void Stun(Character charToAttack)
         {
-            charToAttack.IsStunned = true;
+            charToAttack.IsStunned += 2;
+            //u monster provjerit ako je 0 nista ako je 2 smanji za jedan ili ako je 1 onda je stunned
         }
     }
 }

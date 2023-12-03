@@ -18,13 +18,13 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
 
         public int Turn(Character charToAttack, bool winFlag)
         {
-            if (HP <= 0) 
+            if (HP <= 0 && Lives > 1) 
             {
                 Lives--;
                 return 3;   //resurected
             }
-            if (Lives <= 0) 
-                return 4;   //died
+            if (HP <= 0 && Lives <= 0) 
+                return 0;   //died
             if (Battle.roundCount == 0) 
                 Mana = 100 + Level;
             if (outOfMana && winFlag)
