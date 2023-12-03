@@ -13,7 +13,7 @@ namespace DungeonGame.Domain.Game
 {
     public class Battle
     {
-        static public void Rounds()
+        static public bool Rounds()
         {
             int roundCount = 0;
             Gladiator player = new Gladiator();
@@ -25,22 +25,39 @@ namespace DungeonGame.Domain.Game
                     enemy.Name = $"Enemy{roundCount + 1}";
                     Console.WriteLine(enemy.Name + " HP: " + enemy.HP);
                     Console.WriteLine(player.Name + " HP: " + player.HP);
-                    player.Attack(enemy);
-                } while (enemy.HP > 0);
+                    if (PlayerWin(AttackType.Direct) == 1)
+                    {
+                        Console.WriteLine("attack success");
+                        player.Attack(enemy);
+                    }
+                    else
+                    {
+                        Console.WriteLine("attack fail");
+                        enemy.Attack(player);
+                    }
+                } while (enemy.HP > 0 && player.HP > 0);
                 roundCount++;
+                if (player.HP < 0)
+                {
+                    Console.WriteLine("Player died");
+                    return false;
+                }
+                Console.WriteLine($"{enemy.Name} died");
             } while (roundCount < 10);
-            Console.ReadLine();
+            Console.WriteLine("you win");
+            return true;
         }
         static public int PlayerWin(AttackType playerAttack)
         {
+            var rnd = new Random();
             var wins = new Dictionary<AttackType, AttackType>
             {
                 {AttackType.Direct, AttackType.Side},
                 {AttackType.Side, AttackType.Counter},
                 {AttackType.Counter, AttackType.Direct},
             };
-            var monsterAttack = (AttackType)new Random().Next(0, 3);
-            if (playerAttack == monsterAttack) return 1;
+            var monsterAttack = (AttackType)rnd.Next(0, 3);
+            if (playerAttack == monsterAttack) return 2;
             else if (playerAttack == wins[monsterAttack]) return 0;
             else return 1;
         }

@@ -14,10 +14,7 @@ namespace DungeonGame.Domain.Characters
         abstract public int Damage { get; set; }
         public void Attack(Character charToAttack)
         {
-            if (Battle.PlayerWin(Enums.AttackType.Direct) == 1)
-                Console.WriteLine("attack success");
-            else Console.WriteLine("attack failed");
-            Console.ReadLine();
+            charToAttack.HP -= this.Damage;
         }
     }
 }
