@@ -14,8 +14,6 @@ namespace DungeonGame.Domain.Characters
         abstract public int Damage { get; set; }
         abstract public void Attack(Character charToAttack);
         public bool IsStunned { get; set; }  = false;
-        public int Level { get; set; } = 1;
-
-        
+        public int Lives { get; set; } = 1; 
     }
 }

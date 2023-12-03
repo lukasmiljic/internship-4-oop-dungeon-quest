@@ -13,9 +13,10 @@ namespace DungeonGame.Domain.Game
 {
     public class Battle
     {
+        public static int roundCount { get; set; } = 0;
         static public bool Rounds()
         {
-            int roundCount = 0;
+            roundCount = 0;
             Gladiator player = new Gladiator();
             do
             {
