@@ -9,7 +9,7 @@ namespace DungeonGame.Domain.Characters.Monster.Type
 {
     public class Witch : Monster
     {
-        public override int HP { get; set; } = 90;
+        public override int HP { get; set; } = 70;
         public override int Damage { get; set; } = 30;
         public Witch()
         {

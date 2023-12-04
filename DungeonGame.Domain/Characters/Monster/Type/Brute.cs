@@ -1,4 +1,5 @@
-﻿using DungeonGame.Domain.Enums;
+﻿using DungeonGame.Domain.Constants;
+using DungeonGame.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace DungeonGame.Domain.Characters.Monster.Type
     {
         public override int HP { get; set; } = 60;
         public override int Damage { get; set; } = 30;
+        public static int PowerAttackChance { get; set; } = 95;
         public Brute()
         {
             HP = new Random().Next(55, 65);
@@ -21,12 +23,22 @@ namespace DungeonGame.Domain.Characters.Monster.Type
 
         public override void Attack(Character charToAttack)
         {
-            throw new NotImplementedException();
+            var rand = new Random();
+            int rollDice = rand.Next(99);
+            if (rollDice >= PowerAttackChance) charToAttack.HP *= (int)(charToAttack.HP*0.5);
+            charToAttack.HP -= Damage;
         }
 
         public override int Turn(Character charToAttack, bool winFlag)
         {
-            throw new NotImplementedException();
+            if (HP <= 0)
+            {
+                Lives--;
+                return GameConstants.Death;
+            }
+            if (!winFlag) return GameConstants.LostRound;
+            Attack(charToAttack);
+            return GameConstants.AttackSuccess;
         }
     }
 }
