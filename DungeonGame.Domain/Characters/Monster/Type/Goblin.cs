@@ -32,6 +32,7 @@ namespace DungeonGame.Domain.Characters.Monster.Type
                 Lives--;
                 return GameConstants.Death;
             }
+            if (CheckStatus() == GameConstants.Stunned) return GameConstants.Stunned;
             if (!winFlag) return GameConstants.LostRound;
             Attack(charToAttack);
             return GameConstants.AttackSuccess;

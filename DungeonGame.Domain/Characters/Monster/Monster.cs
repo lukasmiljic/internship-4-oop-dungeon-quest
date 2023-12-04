@@ -1,5 +1,7 @@
 ﻿using DungeonGame.Domain.Characters.Monster.Type;
+using DungeonGame.Domain.Constants;
 using DungeonGame.Domain.Enums;
+using DungeonGame.Domain.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,20 @@ namespace DungeonGame.Domain.Characters.Monster
             if (rollDice >= BruteSpawnRate) monster = new Brute();
             else monster = new Goblin();
             return monster;
+        }
+
+        public int CheckStatus()
+        {
+            if (Battle.MixUp) HP = new Random().Next(99);
+            if (IsStunned == 0) return GameConstants.NoInfo;
+            else if (IsStunned > 1)
+            {
+                --IsStunned;
+                return GameConstants.NoInfo;
+            }
+            return GameConstants.Stunned;
+
+
         }
     }
 }

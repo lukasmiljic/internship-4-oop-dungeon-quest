@@ -37,6 +37,7 @@ namespace DungeonGame.Domain.Characters.Monster.Type
                 return GameConstants.Death;
             }
             if (!winFlag) return GameConstants.LostRound;
+            if (CheckStatus() == GameConstants.Stunned) return GameConstants.Stunned;
             Attack(charToAttack);
             return GameConstants.AttackSuccess;
         }

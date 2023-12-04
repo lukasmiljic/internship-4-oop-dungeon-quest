@@ -47,7 +47,6 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
         public void Stun(Character charToAttack)
         {
             charToAttack.IsStunned += 2;
-            //u monster provjerit ako je 0 nista ako je 2 smanji za jedan ili ako je 1 onda je stunned
         }
     }
 }

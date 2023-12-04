@@ -13,6 +13,7 @@ namespace DungeonGame.Domain.Game
 {
     public class Battle
     {
+        public static bool MixUp { get; set; } = false;
         public static int roundCount { get; set; } = 0;
         static public bool Rounds()
         {

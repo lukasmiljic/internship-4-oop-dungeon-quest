@@ -1,4 +1,5 @@
-﻿using DungeonGame.Domain.Enums;
+﻿using DungeonGame.Domain.Constants;
+using DungeonGame.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,20 @@ namespace DungeonGame.Domain.Characters.Monster.Type
 
         public override void Attack(Character charToAttack)
         {
-            throw new NotImplementedException();
+            charToAttack.HP -= Damage;
         }
 
         public override int Turn(Character charToAttack, bool winFlag)
         {
-            throw new NotImplementedException();
+            if (HP <= 0)
+            {
+                Lives--;
+                return GameConstants.Death;
+            }
+            if (CheckStatus() == GameConstants.Stunned) return GameConstants.Stunned;
+            if (!winFlag) return GameConstants.LostRound;
+            Attack(charToAttack);
+            return GameConstants.AttackSuccess;
         }
     }
 }
