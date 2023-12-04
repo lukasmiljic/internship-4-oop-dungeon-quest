@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DungeonGame.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,18 @@ namespace DungeonGame.Domain.Characters.Monster.Type
         {
             HP = new Random().Next(55, 65);
             Damage = new Random().Next(25, 35);
+            Name = "Brute";
+            Type = MonsterType.Brute;
+        }
+
+        public override void Attack(Character charToAttack)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int Turn(Character charToAttack, bool winFlag)
+        {
+            throw new NotImplementedException();
         }
     }
 }
