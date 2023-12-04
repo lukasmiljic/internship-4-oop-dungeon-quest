@@ -8,13 +8,7 @@ namespace DungeonGame.Presentation
     {
         static void Main(string[] args)
         {
-            //Battle.Rounds();
-            for (int i = 0; i < 10; i++)
-            {
-                var monster = Monster.GenerateMonster();
-                DungeonGame.Domain.Game.Battle.roundCount++;
-                //Console.WriteLine($"{monster.Name} {monster.HP}");
-            }
+            Battle.NewGame();
         }
     }
 }

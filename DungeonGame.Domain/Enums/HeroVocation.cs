@@ -9,7 +9,7 @@ namespace DungeonGame.Domain.Enums
     public enum HeroVocation
     {
         Gladiator,
-        Enchanter,
-        Marksman
+        Marksman,
+        Enchanter
     }
 }

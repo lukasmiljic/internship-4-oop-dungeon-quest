@@ -1,8 +1,10 @@
 ﻿using DungeonGame.Domain.Characters;
 using DungeonGame.Domain.Characters.Hero;
 using DungeonGame.Domain.Characters.Hero.Vocation;
+using DungeonGame.Domain.Characters.Monster;
 using DungeonGame.Domain.Characters.Monster.Type;
 using DungeonGame.Domain.Enums;
+using DungeonGame.Domain.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,53 +17,67 @@ namespace DungeonGame.Domain.Game
     {
         public static bool MixUp { get; set; } = false;
         public static int roundCount { get; set; } = 0;
-        static public bool Rounds()
+        public static int turnCount { get; set; } = 0;
+        static public bool NewGame()
         {
             roundCount = 0;
-            Gladiator player = new Gladiator();
+            var player = GameUI.CreateNewPlayer();
             do
             {
-                Goblin enemy = new Goblin();
+                turnCount = 0;
+                var enemy = Monster.GenerateMonster();
                 do
                 {
-                    enemy.Name = $"Enemy{roundCount + 1}";
-                    Console.WriteLine(enemy.Name + " HP: " + enemy.HP);
-                    Console.WriteLine(player.Name + " HP: " + player.HP);
-                    if (PlayerWin(AttackType.Direct) == 1)
-                    {
-                        Console.WriteLine("attack success");
-                        player.Attack(enemy);
-                    }
-                    else
-                    {
-                        Console.WriteLine("attack fail");
-                        enemy.Attack(player);
-                    }
-                } while (enemy.HP > 0 && player.HP > 0);
+                    GameUI.Stats(player, enemy);
+                    var playerWinFlag = PlayerWin(GameUI.PlayerPickMove(), enemy.MonsterPickMove());
+                    BattleStage(playerWinFlag, player,enemy);
+                    turnCount++;
+                } while (enemy.isAlive && player.isAlive);
                 roundCount++;
-                if (player.HP < 0)
+                if (player.Lives == 0)
                 {
-                    Console.WriteLine("Player died");
+                    Console.WriteLine("PLAYER DIED\n");
                     return false;
                 }
-                Console.WriteLine($"{enemy.Name} died");
+                Console.WriteLine($"{enemy.Name} DIED\n");
+                player.GainXP(enemy.XP);
             } while (roundCount < 10);
-            Console.WriteLine("you win");
+            Console.WriteLine("YOU WON!!!");
             return true;
         }
-        static public int PlayerWin(AttackType playerAttack)
+        static public int PlayerWin(AttackType playerAttack, AttackType monsterAttack)
         {
-            var rnd = new Random();
             var wins = new Dictionary<AttackType, AttackType>
             {
                 {AttackType.Direct, AttackType.Side},
                 {AttackType.Side, AttackType.Counter},
                 {AttackType.Counter, AttackType.Direct},
             };
-            var monsterAttack = (AttackType)rnd.Next(0, 3);
             if (playerAttack == monsterAttack) return 2;
             else if (playerAttack == wins[monsterAttack]) return 0;
             else return 1;
+        }
+
+        static public void BattleStage(int playerWinFlag, Hero player, Monster enemy)
+        {
+            var characterStatus = 0;
+            if (playerWinFlag == 1)
+            {
+                Console.WriteLine($"{player.Name} WON!");
+                characterStatus = player.Turn(enemy, true);
+                GameUI.characterStatus(characterStatus, player.Name);
+            }
+            else if (playerWinFlag == 0)
+            {
+                Console.WriteLine($"{enemy.Name} WON!");
+                characterStatus = enemy.Turn(player, true);
+                GameUI.characterStatus(characterStatus,enemy.Name);
+            }
+            else if (playerWinFlag == 2)
+            {
+                Console.WriteLine("IT'S A TIE");
+            }
+            Console.ReadLine();
         }
     }
 }

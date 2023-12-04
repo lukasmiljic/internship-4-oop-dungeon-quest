@@ -14,8 +14,9 @@ namespace DungeonGame.Domain.Characters.Monster.Type
         public override int Damage { get; set; } = 30;
         public Witch()
         {
-            HP = new Random().Next(65, 80);
+            HP = new Random().Next(15, 25);
             Damage = new Random().Next(25, 35);
+            XP = 100;
             Name = "Witch";
             Type = MonsterType.Witch;
         }
@@ -35,6 +36,7 @@ namespace DungeonGame.Domain.Characters.Monster.Type
             if (CheckStatus() == GameConstants.Stunned) return GameConstants.Stunned;
             if (!winFlag) return GameConstants.LostRound;
             Attack(charToAttack);
+            checkIfAlive(charToAttack);
             return GameConstants.AttackSuccess;
         }
     }

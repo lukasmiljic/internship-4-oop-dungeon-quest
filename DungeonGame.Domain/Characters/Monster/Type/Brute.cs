@@ -15,8 +15,9 @@ namespace DungeonGame.Domain.Characters.Monster.Type
         public static int PowerAttackChance { get; set; } = 95;
         public Brute()
         {
-            HP = new Random().Next(55, 65);
+            HP = new Random().Next(15, 25);
             Damage = new Random().Next(25, 35);
+            XP = 60;
             Name = "Brute";
             Type = MonsterType.Brute;
         }
@@ -39,6 +40,7 @@ namespace DungeonGame.Domain.Characters.Monster.Type
             if (!winFlag) return GameConstants.LostRound;
             if (CheckStatus() == GameConstants.Stunned) return GameConstants.Stunned;
             Attack(charToAttack);
+            checkIfAlive(charToAttack);
             return GameConstants.AttackSuccess;
         }
     }

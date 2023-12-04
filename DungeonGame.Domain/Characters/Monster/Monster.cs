@@ -15,12 +15,12 @@ namespace DungeonGame.Domain.Characters.Monster
         public MonsterType Type { get; set; }
         static public int BruteSpawnRate {get; set;} = 70;
         static public int WitchSpawnRate { get; set; } = 100;
+        public int XP { get; set; } = 50;
 
         static public Monster GenerateMonster()
         {
             var rand = new Random();
             var rollDice = rand.Next(99);
-            Console.WriteLine($"{BruteSpawnRate} {WitchSpawnRate}");
             Monster monster;
             if (rollDice >= WitchSpawnRate) monster = new Witch();
             if (rollDice >= BruteSpawnRate) monster = new Brute();
@@ -38,8 +38,15 @@ namespace DungeonGame.Domain.Characters.Monster
                 return GameConstants.NoInfo;
             }
             return GameConstants.Stunned;
+        }
 
-
+        public AttackType MonsterPickMove()
+        {
+            var rnd = new Random();
+            var monsterPick = (AttackType)rnd.Next(0, 3);
+            Console.WriteLine($"{this.Name.ToUpper()} CHOSE {monsterPick.ToString().ToUpper()}");
+            //return monsterPick;
+            return AttackType.Side;
         }
     }
 }

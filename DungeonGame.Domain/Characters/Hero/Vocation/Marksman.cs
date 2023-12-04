@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DungeonGame.Domain.Characters.Hero.Vocation
 {
-    public class Marskman : Hero
+    public class Marksman : Hero
     {
         public override int HP { get; set; } = 100;
         public override int Damage { get; set; } = 20;
@@ -25,6 +25,7 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
             }
             if (!winFlag) return GameConstants.LostRound;
             Attack(charToAttack);
+            checkIfAlive(charToAttack);
             return GameConstants.AttackSuccess;
         }
         public override void Attack(Character charToAttack)

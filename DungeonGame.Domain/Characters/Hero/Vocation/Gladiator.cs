@@ -9,7 +9,7 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
 {
     public class Gladiator : Hero
     {
-        public override int HP { get; set; } = 110;
+        public override int HP { get; set; } = 10;
         public override int Damage { get; set; } = 10;
         public bool rageAttack { get; set; }
 
@@ -22,6 +22,7 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
             }
             if (!winFlag) return GameConstants.LostRound;
             Attack(charToAttack);
+            checkIfAlive(charToAttack);
             return GameConstants.AttackSuccess;
         }
         override public void Attack(Character charToAttack)

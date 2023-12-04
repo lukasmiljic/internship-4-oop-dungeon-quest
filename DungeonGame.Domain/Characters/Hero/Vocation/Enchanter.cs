@@ -10,7 +10,7 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
 {
     public class Enchanter : Hero
     {
-        public override int HP { get; set; } = 90;
+        public override int HP { get; set; } = 10;
         public override int Damage { get; set; } = 30;
         public int Mana { get; set; } = 100 + Level;
         public bool toAttack { get; set; } = true;
@@ -22,14 +22,13 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
         }
         override public int Turn(Character charToAttack, bool winFlag)
         {
-            if (HP <= 0 && Lives > 1) 
+            if (HP <= 0 && Lives >= 1) 
             {
                 Lives--;
                 return GameConstants.Resurrected;   //resurected
             }
-            if (HP <= 0 && Lives <= 0) 
-                return GameConstants.Death;
-            if (Battle.roundCount == 0) 
+            
+            if (Battle.turnCount == 0) 
                 Mana = 100 + Level;
             if (!winFlag) return GameConstants.LostRound;
             if (outOfMana)
@@ -43,7 +42,9 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
                 HP = 90;
                 return GameConstants.Heal;
             }
+            
             Attack(charToAttack);
+            checkIfAlive(charToAttack);
             return GameConstants.AttackSuccess;
 
         }
