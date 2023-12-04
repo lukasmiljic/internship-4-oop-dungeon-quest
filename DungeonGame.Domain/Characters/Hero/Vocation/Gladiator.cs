@@ -13,7 +13,7 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
         public override int Damage { get; set; } = 10;
         public bool rageAttack { get; set; }
 
-        public override int Turn(Character charToAttack, bool winFlag)
+        override public int Turn(Character charToAttack, bool winFlag)
         {
             if (HP <= 0)
             {

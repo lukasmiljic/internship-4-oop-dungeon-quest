@@ -15,7 +15,7 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
         const int CritMultiplier = 5;
         public int StunChance { get; set; } = 5;
         public bool CritAttack { get; set; } = false;
-        public override int Turn(Character charToAttack, bool winFlag)
+        override public int Turn(Character charToAttack, bool winFlag)
         {
             CritAttack = false;
             if (HP <= 0)
