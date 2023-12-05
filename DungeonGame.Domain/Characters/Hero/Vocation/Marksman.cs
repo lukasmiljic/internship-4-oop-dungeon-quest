@@ -9,23 +9,21 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
 {
     public class Marksman : Hero
     {
-        public override int HP { get; set; } = 100;
-        public override int Damage { get; set; } = 20;
-        public int CricitcalChance { get; set; } = 5;
+        public override int HP { get; set; } = 120;
+        public override int Damage { get; set; } = 8;
+        public int CricitcalChance { get; set; } = 5 + Level*5;
         const int CritMultiplier = 5;
-        public int StunChance { get; set; } = 5;
+        public int StunChance { get; set; } = 5 + Level*5;
         public bool CritAttack { get; set; } = false;
         override public int Turn(Character charToAttack, bool winFlag)
         {
             CritAttack = false;
-            if (HP <= 0)
-            {
-                Lives--;
-                return GameConstants.Death;
-            }
             if (!winFlag) return GameConstants.LostRound;
             Attack(charToAttack);
             checkIfAlive(charToAttack);
+            if (!charToAttack.isAlive)
+
+                GainXP(charToAttack.XP);
             return GameConstants.AttackSuccess;
         }
         public override void Attack(Character charToAttack)
@@ -40,14 +38,14 @@ namespace DungeonGame.Domain.Characters.Hero.Vocation
 
         public void CriticalAttack(Character charToAttack)
         {
-            Damage *= CritMultiplier;
-            charToAttack.HP -= Damage;
-            Damage /= CritMultiplier;
+            charToAttack.HP -= Damage * CritMultiplier;
+            Console.WriteLine($"CRITICAL ATTACK HIT FOR {Damage * CritMultiplier} POINTS");
         }
 
         public void Stun(Character charToAttack)
         {
-            charToAttack.IsStunned += 2;
+            charToAttack.IsStunned = true;
+            Console.WriteLine("STUNNED ENEMY");
         }
     }
 }

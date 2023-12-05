@@ -24,5 +24,26 @@ namespace DungeonGame.Domain.UI
             }
             return null;
         }
+        public static bool AreYouSure()
+        {
+            do
+            {
+                char userChoice;
+                Console.Write("[y/n]: ");
+                char.TryParse(Console.ReadLine(), out userChoice);
+                if (userChoice == 'y')
+                {
+                    return true;
+                }
+                else if (userChoice == 'n')
+                {
+                    return false;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input!");
+                }
+            } while (true);
+        }
     }
 }

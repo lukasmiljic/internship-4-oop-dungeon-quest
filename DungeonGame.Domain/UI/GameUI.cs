@@ -27,11 +27,11 @@ namespace DungeonGame.Domain.UI
             Console.ReadLine();
             return player;
         }
-        static public void Stats(Hero player, Monster enemy) {
+        static public void PrintStats(Hero player, Monster enemy) {
             Console.WriteLine($"ROUND {Battle.roundCount+1}");
-            Console.WriteLine($"{player.Name} HP:{player.HP}");
-            Console.WriteLine($"Enemy {enemy.Type} HP: {enemy.HP}");
-            if (enemy.IsStunned == 1)
+            Console.WriteLine(player.ToString());
+            Console.WriteLine(enemy.ToString());
+            if (enemy.IsStunned)
                 Console.WriteLine($"{enemy.Name} is stunned");
         }
         static public AttackType PlayerPickMove()
@@ -40,7 +40,6 @@ namespace DungeonGame.Domain.UI
             var playerMove = int.Parse(Console.ReadLine());
             return (AttackType)playerMove;
         }
-
         static public void characterStatus(int characterStatus, String characterName)
         {
             switch (characterStatus) 
@@ -49,12 +48,16 @@ namespace DungeonGame.Domain.UI
                     Console.WriteLine($"{characterName.ToUpper()} RESSURECTED");
                     break;
 
-                //case GameConstants.AttackSuccess:
-                //    Console.WriteLine($"{characterName.ToUpper()} WINS");
-                //    break;
-
                 case GameConstants.Stunned:
                     Console.WriteLine($"{characterName.ToUpper()} IS STUNNED");
+                    break;
+
+                case GameConstants.ManaRefilled:
+                    Console.WriteLine($"{characterName.ToUpper()} MANA RESTORED");
+                    break;
+
+                case GameConstants.Heal:
+                    Console.WriteLine($"{characterName.ToUpper()} HEALED");
                     break;
 
                 default:

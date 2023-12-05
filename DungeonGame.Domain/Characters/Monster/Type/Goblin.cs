@@ -11,7 +11,7 @@ namespace DungeonGame.Domain.Characters.Monster.Type
 {
     public class Goblin : Monster
     {
-        public override int HP { get; set; } = 30;
+        public override int HP { get; set; } = 10;
         public override int Damage { get; set; } = 10;
         public Goblin()
         {
@@ -28,11 +28,6 @@ namespace DungeonGame.Domain.Characters.Monster.Type
 
         public override int Turn(Character charToAttack, bool winFlag)
         {
-            if (HP <= 0)
-            {
-                Lives--;
-                return GameConstants.Death;
-            }
             if (CheckStatus() == GameConstants.Stunned) return GameConstants.Stunned;
             if (!winFlag) return GameConstants.LostRound;
             Attack(charToAttack);

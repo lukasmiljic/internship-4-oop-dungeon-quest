@@ -15,7 +15,7 @@ namespace DungeonGame.Domain.Characters.Monster
         public MonsterType Type { get; set; }
         static public int BruteSpawnRate {get; set;} = 70;
         static public int WitchSpawnRate { get; set; } = 100;
-        public int XP { get; set; } = 50;
+        override public int XP { get; set; } = 50;
 
         static public Monster GenerateMonster()
         {
@@ -31,13 +31,12 @@ namespace DungeonGame.Domain.Characters.Monster
         public int CheckStatus()
         {
             if (Battle.MixUp) HP = new Random().Next(99);
-            if (IsStunned == 0) return GameConstants.NoInfo;
-            else if (IsStunned > 1)
+            if (IsStunned)
             {
-                --IsStunned;
-                return GameConstants.NoInfo;
+                IsStunned = false;
+                return GameConstants.Stunned!;
             }
-            return GameConstants.Stunned;
+            return GameConstants.NoInfo;
         }
 
         public AttackType MonsterPickMove()

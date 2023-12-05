@@ -11,7 +11,7 @@ namespace DungeonGame.Domain.Characters.Hero
 {
     abstract public class Hero : Character
     {
-        public int XP { get; private set; } = 0;
+        override public int XP { get; set; } = 0;
         public static int Level { get; set; } = 1;
         public HeroVocation HeroVocation { get; private set; }
         public void GainXP(int newXP)
@@ -20,6 +20,9 @@ namespace DungeonGame.Domain.Characters.Hero
             if (XP >= 100)
             {
                 Level++;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nLEVELED UP\n");
+                Console.ForegroundColor = ConsoleColor.White;
                 XP %= 100;
             }
         }
@@ -39,6 +42,10 @@ namespace DungeonGame.Domain.Characters.Hero
                     return hero;
             }
             return null;
+        }
+        public override string ToString()
+        {
+            return $"Level {Level} " + base.ToString();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace DungeonGame.Domain.Characters.Monster.Type
 {
     public class Brute : Monster
     {
-        public override int HP { get; set; } = 60;
+        public override int HP { get; set; } = 15;
         public override int Damage { get; set; } = 30;
         public static int PowerAttackChance { get; set; } = 95;
         public Brute()
@@ -21,7 +21,6 @@ namespace DungeonGame.Domain.Characters.Monster.Type
             Name = "Brute";
             Type = MonsterType.Brute;
         }
-
         public override void Attack(Character charToAttack)
         {
             var rand = new Random();
@@ -32,11 +31,6 @@ namespace DungeonGame.Domain.Characters.Monster.Type
 
         public override int Turn(Character charToAttack, bool winFlag)
         {
-            if (HP <= 0)
-            {
-                Lives--;
-                return GameConstants.Death;
-            }
             if (!winFlag) return GameConstants.LostRound;
             if (CheckStatus() == GameConstants.Stunned) return GameConstants.Stunned;
             Attack(charToAttack);
