@@ -1,12 +1,4 @@
-﻿using DungeonGame.Domain.Constants;
-using DungeonGame.Domain.Game;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DungeonGame.Domain.Characters
+﻿namespace DungeonGame.Domain.Characters
 {
     abstract public class Character
     {

@@ -1,11 +1,5 @@
 ﻿using DungeonGame.Domain.Characters.Hero.Vocation;
-using DungeonGame.Domain.Characters.Monster.Type;
 using DungeonGame.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DungeonGame.Domain.Characters.Hero
 {

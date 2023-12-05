@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DungeonGame.Domain.Game;
+﻿using DungeonGame.Domain.Game;
 using DungeonGame.Domain.Constants;
 
 namespace DungeonGame.Domain.Characters.Hero.Vocation
